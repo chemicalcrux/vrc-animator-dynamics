@@ -145,7 +145,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             var inputTree = CreateInputTree(controller, source, "x", true);
             rootTree.AddChild(inputTree);
 
-            var velocityTree = CreateVelocityTree(controller, source);
+            var velocityTree = CreateVelocityTree(source);
             rootTree.AddChild(velocityTree);
 
             var positiveResult = AnimatorMath.Remap(source.deltaTimeParameter, "yd", new Vector2(0, tCrit),
@@ -316,7 +316,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             return root;
         }
 
-        static BlendTree CreateVelocityTree(AnimatorController controller, SecondOrderDynamicsSource source)
+        static BlendTree CreateVelocityTree(SecondOrderDynamicsSource source)
         {
             var root = new BlendTree
             {
@@ -332,54 +332,6 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             root.children = children;
 
             return root;
-        }
-
-        static BlendTree CreateCorrectionTree(SecondOrderDynamicsSource source, float tCrit, string param, float sign)
-        {
-            var first = new BlendTree
-            {
-                name = "First",
-                blendType = BlendTreeType.Simple1D,
-                blendParameter = source.deltaTimeParameter,
-                useAutomaticThresholds = false
-            };
-
-            first.AddChild(AnimatorMath.Constant(param, 0));
-
-            var second = new BlendTree
-            {
-                name = "Second",
-                blendType = BlendTreeType.Simple1D,
-                blendParameter = source.deltaTimeParameter,
-                useAutomaticThresholds = false
-            };
-
-            first.AddChild(second);
-
-            second.AddChild(AnimatorMath.Constant(param, 0));
-            
-            var result = AnimatorMath.Combine(
-                AnimatorMath.GetClip(param, sign * tCrit * tCrit),
-                AnimatorMath.Constant($"Fix {param}", sign * tCrit * tCrit)
-            );
-
-            second.AddChild(result);
-
-            var children = first.children;
-
-            children[0].threshold = 0;
-            children[1].threshold = tCrit;
-
-            first.children = children;
-
-            children = second.children;
-
-            children[0].threshold = 0;
-            children[1].threshold = tCrit;
-
-            second.children = children;
-
-            return first;
         }
     }
 }
