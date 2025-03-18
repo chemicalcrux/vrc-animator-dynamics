@@ -1,27 +1,13 @@
 using ChemicalCrux.AnimatorDynamics.Runtime;
 using com.vrcfury.api;
-using Unity.Properties;
 using UnityEditor.Animations;
 using UnityEngine;
-using VRC.SDKBase.Editor.BuildPipeline;
 
-namespace ChemicalCrux.AnimatorDynamics.Editor
+namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
-    public class SecondOrderDynamicsProcessor : IVRCSDKPreprocessAvatarCallback
+    public class SecondOrderDynamicsProcessor
     {
-        public int callbackOrder => -10001;
-
-        public bool OnPreprocessAvatar(GameObject avatarGameObject)
-        {
-            AnimatorMath.Reset();
-
-            foreach (var source in avatarGameObject.GetComponentsInChildren<SecondOrderDynamicsSource>(true))
-                Process(source, avatarGameObject);
-
-            return true;
-        }
-
-        private static void Process(SecondOrderDynamicsSource source, GameObject avatarRoot)
+        public static void Process(SecondOrderDynamicsSource source, GameObject avatarRoot)
         {
             AnimatorController controller = new();
 
