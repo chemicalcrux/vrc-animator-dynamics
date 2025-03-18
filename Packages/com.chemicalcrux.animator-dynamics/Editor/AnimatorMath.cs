@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -193,6 +194,40 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             }
 
             return leaf;
+        }
+
+        public static BlendTree Create1DProductTree(Motion positiveTip, Motion negativeTip,
+            params (string param, Vector2 range)[] parts)
+        {
+            var tree = new BlendTree
+            {
+                name = "1D Product: " + parts[0].param,
+                blendType = BlendTreeType.Simple1D,
+                blendParameter = parts[0].param,
+                useAutomaticThresholds = false
+            };
+
+            if (parts.Length == 1)
+            {
+                tree.AddChild(negativeTip);
+                tree.AddChild(positiveTip);
+            }
+            else
+            {
+                var childArray = parts.Skip(1).ToArray();
+
+                tree.AddChild(Create1DProductTree(negativeTip, positiveTip, childArray));
+                tree.AddChild(Create1DProductTree(positiveTip, negativeTip, childArray));
+            }
+
+            var children = tree.children;
+
+            children[0].threshold = parts[0].range.x;
+            children[1].threshold = parts[0].range.y;
+
+            tree.children = children;
+
+            return tree;
         }
 
         public static void SetOneParams(BlendTree tree)

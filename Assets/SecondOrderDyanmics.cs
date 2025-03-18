@@ -97,7 +97,7 @@ namespace Pursuit.Code
                 yd_change -= t * y / k2;
                 yd_change -= t * t * yd / k2;
                 yd_change -= t * k1 * yd / k2;
-                
+                //
                 // yd_change = t * (x + k3 * xd - y - k1 * yd) / k2;
 
                 y = y + y_change;

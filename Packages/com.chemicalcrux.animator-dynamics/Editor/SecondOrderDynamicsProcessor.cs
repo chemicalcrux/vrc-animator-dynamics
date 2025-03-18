@@ -42,6 +42,8 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             controller.AddParameter("k1", AnimatorControllerParameterType.Float);
             controller.AddParameter("k2_inv", AnimatorControllerParameterType.Float);
             controller.AddParameter("k3", AnimatorControllerParameterType.Float);
+            
+            controller.AddParameter("tCrit", AnimatorControllerParameterType.Float);
 
             controller.AddParameter("x", AnimatorControllerParameterType.Float);
             controller.AddParameter("xd", AnimatorControllerParameterType.Float);
@@ -91,6 +93,11 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
                     parameter.defaultFloat = k3;
                 }
 
+                if (parameter.name == "tCrit")
+                {
+                    parameter.defaultFloat = tCrit;
+                }
+
                 if (parameter.name == "x")
                 {
                     parameter.defaultFloat = source.x0;
@@ -132,45 +139,58 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             var copyXTree = AnimatorMath.Copy("x", "xp");
             rootTree.AddChild(copyXTree);
 
+            var copyYDTree = AnimatorMath.Copy("yd", "yd");
+            rootTree.AddChild(copyYDTree);
+
             var inputTree = CreateInputTree(controller, source, "x", true);
             rootTree.AddChild(inputTree);
 
             var velocityTree = CreateVelocityTree(controller, source);
             rootTree.AddChild(velocityTree);
 
-            var positiveY = CreateCorrectionTree(source, tCrit, source.outputParameter, 1);
-            var negativeY = CreateCorrectionTree(source, tCrit, source.outputParameter, -1);
+            var positiveResult = AnimatorMath.Remap(source.deltaTimeParameter, "yd", new Vector2(0, tCrit),
+                new Vector2(0, 1000 * tCrit));
+            var negativeResult = AnimatorMath.Remap(source.deltaTimeParameter, "yd", new Vector2(0, tCrit),
+                new Vector2(0, -1000 * tCrit));
 
-            var positiveYD = AnimatorMath.Remap(source.deltaTimeParameter, "yd", new Vector2(0, tCrit),
-                new Vector2(0, tCrit));
-            var positiveYDNeg = AnimatorMath.Remap(source.deltaTimeParameter, "yd_neg", new Vector2(0, tCrit),
-                new Vector2(0, -tCrit));
+            var positiveResultDoubleTime = AnimatorMath.Create1DProductTree(
+                AnimatorMath.Constant("yd", 1000 * tCrit * tCrit),
+                AnimatorMath.Constant("yd", -1000 * tCrit * tCrit),
+                (source.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
+                (source.deltaTimeParameter, new Vector2(-tCrit, tCrit))
+            );
 
-            var negativeYD = AnimatorMath.Remap(source.deltaTimeParameter, "yd", new Vector2(0, tCrit),
-                new Vector2(0, -tCrit));
-            var negativeYDNeg = AnimatorMath.Remap(source.deltaTimeParameter, "yd_neg", new Vector2(0, tCrit),
-                new Vector2(0, tCrit));
+            var negativeResultDoubleTime = AnimatorMath.Create1DProductTree(
+                AnimatorMath.Constant("yd", -1000 * tCrit * tCrit),
+                AnimatorMath.Constant("yd", 1000 * tCrit * tCrit),
+                (source.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
+                (source.deltaTimeParameter, new Vector2(-tCrit, tCrit))
+            );
+            
+            var range1000 = new Vector2(-1000, 1000);
 
-            var positiveResult = AnimatorMath.Combine(positiveY, positiveYD, positiveYDNeg);
-            var negativeResult = AnimatorMath.Combine(negativeY, negativeYD, negativeYDNeg);
+            var part1 = AnimatorMath.Create1DProductTree(positiveResult, negativeResult, ("x", range1000));
+            part1 = AnimatorMath.CreateProductTree(part1, "k2_inv");
 
-            var part1 = AnimatorMath.CreateProductTree(positiveResult, "k2_inv", "x");
-            var part2 = AnimatorMath.CreateProductTree(positiveResult, "k3",
-                "xd", "k2_inv");
-            var part3 = AnimatorMath.CreateProductTree(negativeResult, source.outputParameter, "k2_inv");
-            var part4 = AnimatorMath.CreateProductTree(negativeResult, "k1",
-                "yd", "k2_inv");
+            var part2 = AnimatorMath.Create1DProductTree(positiveResult, negativeResult, ("xd", range1000));
+            part2 = AnimatorMath.CreateProductTree(part2, "k3", "k2_inv");
 
+            var part3 = AnimatorMath.Create1DProductTree(negativeResult, positiveResult,
+                (source.outputParameter, range1000));
+            part3 = AnimatorMath.CreateProductTree(part3, "k2_inv");
+            
+            var part4 = AnimatorMath.Create1DProductTree(negativeResultDoubleTime, positiveResultDoubleTime, ("yd", range1000));
+            part4 = AnimatorMath.CreateProductTree(part4, "k2_inv");
+            
+            var part5 = AnimatorMath.Create1DProductTree(negativeResult, positiveResult, ("yd", range1000));
+            part5 = AnimatorMath.CreateProductTree(part5, "k1", "k2_inv");
+            
             rootTree.AddChild(part1);
             rootTree.AddChild(part2);
             rootTree.AddChild(part3);
             rootTree.AddChild(part4);
-
-            part4 = AnimatorMath.CreateProductTree(positiveResult, "k1",
-                "yd_neg", "k2_inv");
-
-            rootTree.AddChild(part4);
-
+            rootTree.AddChild(part5);
+            //
             // this does not correspond to any part of the equation -- but we need to compensate for
             // how the addition to y doesn't happen until the next frame!
 
@@ -211,8 +231,8 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
             }
 
             fc.AddGlobalParam(source.outputParameter);
-            // fc.AddGlobalParam(source.deltaTimeParameter);
-            // fc.AddGlobalParam(source.deltaTimeInverseParameter);
+            fc.AddGlobalParam(source.deltaTimeParameter);
+            fc.AddGlobalParam(source.deltaTimeInverseParameter);
         }
 
         static BlendTree CreateInputTree(AnimatorController controller, SecondOrderDynamicsSource source, string param,
@@ -277,32 +297,21 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            var negative = AnimatorMath.CreateProductTree(
-                AnimatorMath.Remap(source.deltaTimeParameter, source.outputParameter, new Vector2(0, tCrit),
-                    new Vector2(0, -tCrit)), "yd_neg");
-            var positive = AnimatorMath.CreateProductTree(
-                AnimatorMath.Remap(source.deltaTimeParameter, source.outputParameter, new Vector2(0, tCrit),
-                    new Vector2(0, tCrit)), "yd");
+            var positive = AnimatorMath.Remap(source.deltaTimeParameter, source.outputParameter, new Vector2(0, tCrit),
+                new Vector2(0, 100 * tCrit));
+            var negative = AnimatorMath.Remap(source.deltaTimeParameter, source.outputParameter, new Vector2(0, tCrit),
+                new Vector2(0, -100 * tCrit));
 
-            change.AddChild(negative);
-            change.AddChild(positive);
+            var move = AnimatorMath.Create1DProductTree(positive, negative, ("yd", new Vector2(-100, 100)));
 
-            var children = change.children;
+            change.AddChild(move);
 
-            children[0].directBlendParameter = "One";
-            children[1].directBlendParameter = "One";
-
-            change.children = children;
+            AnimatorMath.SetOneParams(change);
 
             root.AddChild(keep);
             root.AddChild(change);
 
-            children = root.children;
-
-            children[0].directBlendParameter = "One";
-            children[1].directBlendParameter = "One";
-
-            root.children = children;
+            AnimatorMath.SetOneParams(root);
 
             return root;
         }

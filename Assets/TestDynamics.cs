@@ -14,7 +14,7 @@ namespace Pursuit.Code
         
         void Update()
         {
-            dynamics.Update(0.1f, target);
+            dynamics.Update(0.2f, target);
         }
     }
 }
