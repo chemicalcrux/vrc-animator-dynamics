@@ -209,6 +209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial_Robot_Avatar_Dynamics_Demo_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: f81e8172c337a714894d6fdbd0900d8d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6f8755292942c4d0788b6b99e801b0ad, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -441,12 +446,97 @@ MonoBehaviour:
         localTransitionTimeIn: 0
         localTransitionTimeOut: 0
         simpleOutTransition: 1
-        defaultSliderValue: 0
+        defaultSliderValue: 1
         useGlobalParam: 1
         globalParam: Input
         holdButton: 0
         invertRestLogic: 0
         expandIntoTransition: 1
+--- !u!1 &846657230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846657232}
+  - component: {fileID: 846657231}
+  - component: {fileID: 846657233}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &846657231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846657230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeba0bb9a22d4b52bda62b4e4900851c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamics:
+    x0: 1
+    f: 3
+    z: 0.3
+    r: 0.25
+    k1: 0
+    k2: 0
+    k3: 0
+    tCrit: 0
+    xp: 0
+    y: 0
+    yd: 0
+    expanded: 0
+  target: 1
+--- !u!4 &846657232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846657230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.108348, y: -4.827283, z: -21.323006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &846657233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846657230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeba0bb9a22d4b52bda62b4e4900851c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamics:
+    x0: 1
+    f: 3
+    z: 0.3
+    r: 0.25
+    k1: 0
+    k2: 0
+    k3: 0
+    tCrit: 0
+    xp: 0
+    y: 0
+    yd: 0
+    expanded: 1
+  target: 1
 --- !u!4 &846702744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -785962449690622979, guid: f81e8172c337a714894d6fdbd0900d8d,
@@ -673,6 +763,67 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 471023350}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2005251858
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1196135828297054, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_Name
+      value: GestureManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364010554535032, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2cd7c2d73a12a214b930125a1ca4ed33, type: 3}
 --- !u!1 &2010565998
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,10 +1045,10 @@ MonoBehaviour:
   - parameter: Input
     inputRange: {x: 0, y: 1}
     outputRange: {x: 0, y: 1}
-  x0: 0
-  f: 1
-  z: 0.25
-  r: 1
+  x0: 1
+  f: 3
+  z: 0.3
+  r: 0
   outputParameter: Shared/Result
   deltaTimeParameter: Shared/Time/Delta
   deltaTimeInverseParameter: Shared/Time/Delta Inverse
@@ -1019,7 +1170,7 @@ MonoBehaviour:
         right: {x: 0, y: 0, z: 0, w: 0}
     eyelidsSkinnedMesh: {fileID: 0}
     eyelidsBlendshapes: 
-  customizeAnimationLayers: 0
+  customizeAnimationLayers: 1
   baseAnimationLayers:
   - isEnabled: 0
     type: 0
@@ -1043,9 +1194,10 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 0}
+    animatorController: {fileID: 9100000, guid: 6f8755292942c4d0788b6b99e801b0ad,
+      type: 2}
     mask: {fileID: 0}
-    isDefault: 1
+    isDefault: 0
   specialAnimationLayers:
   - isEnabled: 0
     type: 6
@@ -1219,3 +1371,5 @@ SceneRoots:
   - {fileID: 1552972962}
   - {fileID: 612566809}
   - {fileID: 471023350}
+  - {fileID: 2005251858}
+  - {fileID: 846657232}
