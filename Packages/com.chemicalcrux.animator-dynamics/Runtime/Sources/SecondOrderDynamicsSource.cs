@@ -4,7 +4,7 @@ using Pursuit.Code;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime
+namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
 {
     [Serializable]
     public struct InputItem

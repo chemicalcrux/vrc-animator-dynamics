@@ -1,5 +1,6 @@
 using ChemicalCrux.AnimatorDynamics.Editor.Processors;
 using ChemicalCrux.AnimatorDynamics.Runtime;
+using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
 using UnityEngine;
 using VRC.SDKBase.Editor.BuildPipeline;
 
@@ -18,6 +19,9 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
 
             foreach (var source in avatarGameObject.GetComponentsInChildren<ApproachSource>(true))
                 ApproachProcessor.Process(source, avatarGameObject);
+
+            foreach (var source in avatarGameObject.GetComponentsInChildren<LinearMoveTowardsSource>(true))
+                new LinearMoveTowardsProcessor().Process(source, avatarGameObject);
 
             return true;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime
+namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
 {
     public class ApproachSource : MonoBehaviour, IEditorOnly
     {
