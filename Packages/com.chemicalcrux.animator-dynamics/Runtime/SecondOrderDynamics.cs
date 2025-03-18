@@ -8,11 +8,11 @@ namespace Pursuit.Code
     [Serializable]
     public abstract class SecondOrderDynamics<T>
     {
-        [SerializeField] private T x0;
+        public T x0;
 
-        [SerializeField] public float f;
-        [SerializeField] public float z;
-        [SerializeField] public float r;
+        public float f;
+        public float z;
+        public float r;
 
         public float k1;
         public float k2;
@@ -85,6 +85,7 @@ namespace Pursuit.Code
 
         protected override void Integrate(ref float y, ref float yd, float t, float x, float xd)
         {
+            // This closely matches what the blendtree does
             if (expanded)
             {
                 float y_change = 0;
@@ -97,8 +98,6 @@ namespace Pursuit.Code
                 yd_change -= t * y / k2;
                 yd_change -= t * t * yd / k2;
                 yd_change -= t * k1 * yd / k2;
-                //
-                // yd_change = t * (x + k3 * xd - y - k1 * yd) / k2;
 
                 y = y + y_change;
                 yd = yd + yd_change;
