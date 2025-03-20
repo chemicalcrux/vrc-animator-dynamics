@@ -3,7 +3,9 @@
     "rootNamespace": "ChemicalCrux.AnimatorDynamics.Editor",
     "references": [
         "GUID:f73a22696233641469fa8a261cbb8580",
-        "GUID:cd59bf9231294ffab8427690942c6a35"
+        "GUID:cd59bf9231294ffab8427690942c6a35",
+        "GUID:095df8f1a90724013b1c492e5ce28301",
+        "GUID:987747dc4716047fdae23943e28c5554"
     ],
     "includePlatforms": [
         "Editor"

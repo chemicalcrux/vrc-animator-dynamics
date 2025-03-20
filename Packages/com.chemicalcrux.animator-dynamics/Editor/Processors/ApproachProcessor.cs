@@ -1,49 +1,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
-using com.vrcfury.api;
+using ChemicalCrux.ProceduralController.Editor;
+using ChemicalCrux.ProceduralController.Editor.Processors;
+using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
 using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
 
 namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
-    public static class ApproachProcessor
+    [UsedImplicitly]
+    public class ApproachProcessor : Processor<ApproachSource>
     {
-        private static int _inputIndex;
-        private static readonly Dictionary<string, string> InputMap = new();
+        private AnimatorController controller;
+        
+        private int inputIndex;
+        private readonly Dictionary<string, string> inputMap = new();
 
-        public static void Process(ApproachSource source, GameObject avatarRoot)
+        public override void Process(Context context)
         {
-            InputMap.Clear();
-            _inputIndex = 0;
+            inputMap.Clear();
+            inputIndex = 0;
 
-            var controller = new AnimatorController();
+            controller = new AnimatorController();
 
-            AddParameters(source, controller);
-            AddRemapLayer(source, controller);
-            AddProductLayer(source, controller);
+            AddParameters();
+            AddRemapLayer();
+            AddProductLayer();
 
-            var fc = FuryComponents.CreateFullController(source.gameObject);
-            fc.AddController(controller);
-
-            foreach (var input in source.inputs)
-                fc.AddGlobalParam(input.parameter);
-
-            fc.AddGlobalParam(source.outputParameter);
+            context.receiver.AddController(controller);
         }
 
-        static void AddParameters(ApproachSource source, AnimatorController controller)
+        void AddParameters()
         {
-            foreach (var input in source.inputs)
+            foreach (var input in model.inputs)
             {
-                InputMap[input.parameter] = $"Internal/Remap {_inputIndex}";
-                ++_inputIndex;
+                inputMap[input.parameter] = $"Internal/Remap {inputIndex}";
+                ++inputIndex;
                 controller.AddParameter(input.parameter, AnimatorControllerParameterType.Float);
-                controller.AddParameter(InputMap[input.parameter], AnimatorControllerParameterType.Float);
+                controller.AddParameter(inputMap[input.parameter], AnimatorControllerParameterType.Float);
             }
 
-            controller.AddParameter(source.outputParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(model.outputParameter, AnimatorControllerParameterType.Float);
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
 
             var parameters = controller.parameters;
@@ -59,7 +58,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
             controller.parameters = parameters;
         }
 
-        static void AddRemapLayer(ApproachSource source, AnimatorController controller)
+        void AddRemapLayer()
         {
             var machine = new AnimatorStateMachine
             {
@@ -78,13 +77,13 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 
             List<Motion> motions = new();
 
-            foreach (var input in source.inputs)
+            foreach (var input in model.inputs)
             {
                 Vector2 outputRange;
 
                 outputRange.x = 1 - input.approachRange.x;
                 outputRange.y = 1 - input.approachRange.y;
-                var motion = Remap(input.parameter, InputMap[input.parameter], input.inputRange, outputRange);
+                var motion = Remap(input.parameter, inputMap[input.parameter], input.inputRange, outputRange);
                 motions.Add(motion);
             }
 
@@ -94,7 +93,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
             state.motion = combine;
         }
 
-        static void AddProductLayer(ApproachSource source, AnimatorController controller)
+        void AddProductLayer()
         {
             var machine = new AnimatorStateMachine
             {
@@ -118,11 +117,11 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            root.AddChild(GetClip(source.outputParameter, source.outputRange.y));
+            root.AddChild(GetClip(model.outputParameter, model.outputRange.y));
 
             var product = CreateProductTree(
-                GetClip(source.outputParameter, source.outputRange.x - source.outputRange.y),
-                source.inputs.Select(input => InputMap[input.parameter]).ToArray());
+                GetClip(model.outputParameter, model.outputRange.x - model.outputRange.y),
+                model.inputs.Select(input => inputMap[input.parameter]).ToArray());
 
             root.AddChild(product);
 

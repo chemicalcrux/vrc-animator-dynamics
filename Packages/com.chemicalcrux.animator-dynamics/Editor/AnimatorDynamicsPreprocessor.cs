@@ -13,15 +13,6 @@ namespace ChemicalCrux.AnimatorDynamics.Editor
         {
             AnimatorMath.Reset();
 
-            foreach (var source in avatarGameObject.GetComponentsInChildren<SecondOrderDynamicsSource>(true))
-                SecondOrderDynamicsProcessor.Process(source, avatarGameObject);
-
-            foreach (var source in avatarGameObject.GetComponentsInChildren<ApproachSource>(true))
-                ApproachProcessor.Process(source, avatarGameObject);
-
-            foreach (var source in avatarGameObject.GetComponentsInChildren<LinearMoveTowardsSource>(true))
-                new LinearMoveTowardsProcessor().Process(source, avatarGameObject);
-
             return true;
         }
     }

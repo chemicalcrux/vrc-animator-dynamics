@@ -1,7 +1,7 @@
 {
   "name": "com.chemicalcrux.animator-dynamics",
   "displayName": "Animator Dynamics",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "unity": "2022.3",
   "description": "Creates animator controllers that perform linear blends, second order dynamics, etc.",
   "vrchatVersion": "2025.1.2",
@@ -12,6 +12,7 @@
   },
   "vpmDependencies" : {
     "com.vrchat.avatars" : ">=3.7.6 < 3.8.X",
-    "com.vrcfury.vrcfury" : ">=1.1206.0"
+    "com.vrcfury.vrcfury" : ">=1.1206.0",
+    "com.chemicalcrux.procedural-controller" : "0.1.X"
   }
 }

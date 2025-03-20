@@ -16,7 +16,7 @@ MonoBehaviour:
   controls:
   - name: 'Input 1
 
-      [0.0 , 1.0] -> [0.0 , 0.5]'
+      [0.0 , 1.0] -> [0.0 , 1.0]'
     icon: {fileID: 0}
     type: 203
     parameter:
@@ -25,7 +25,7 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: Approach/Input 1
+    - name: Input 1
     labels: []
   - name: 'Input 2
 
@@ -38,7 +38,7 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: Approach/Input 2
+    - name: Input 2
     labels: []
   - name: 'Input 3
 
@@ -51,5 +51,5 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: Approach/Input 3
+    - name: Input 3
     labels: []

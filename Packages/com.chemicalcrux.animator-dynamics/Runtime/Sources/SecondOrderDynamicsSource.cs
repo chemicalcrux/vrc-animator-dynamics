@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ChemicalCrux.ProceduralController.Runtime.Models;
 using Pursuit.Code;
 using UnityEngine;
 using VRC.SDKBase;
@@ -14,7 +15,8 @@ namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
         public Vector2 outputRange;
     }
     
-    public class SecondOrderDynamicsSource : MonoBehaviour, IEditorOnly
+    [CreateAssetMenu]
+    public class SecondOrderDynamicsSource : AssetModel
     {
         public List<InputItem> inputs;
         public float x0;

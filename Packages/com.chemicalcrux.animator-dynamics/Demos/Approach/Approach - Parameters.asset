@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   parameters:
-  - name: Approach/Input 1
+  - name: Input 1
     valueType: 1
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: Approach/Input 2
+  - name: Input 2
     valueType: 1
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: Approach/Input 3
+  - name: Input 3
     valueType: 1
     saved: 1
     defaultValue: 0

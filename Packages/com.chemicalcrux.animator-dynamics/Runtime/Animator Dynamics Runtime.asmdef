@@ -2,7 +2,8 @@
     "name": "AnimatorDynamicsRuntime",
     "rootNamespace": "ChemicalCrux.AnimatorDynamics.Runtime",
     "references": [
-        "GUID:3456780c4fb2d324ab9c633d6f1b0ddb"
+        "GUID:3456780c4fb2d324ab9c633d6f1b0ddb",
+        "GUID:095df8f1a90724013b1c492e5ce28301"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

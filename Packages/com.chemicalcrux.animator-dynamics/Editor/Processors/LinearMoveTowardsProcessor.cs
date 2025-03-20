@@ -1,5 +1,8 @@
 using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
+using ChemicalCrux.ProceduralController.Editor;
+using ChemicalCrux.ProceduralController.Editor.Processors;
 using com.vrcfury.api;
+using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -7,9 +10,10 @@ using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
 
 namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
-    public class LinearMoveTowardsProcessor
+    [UsedImplicitly]
+    public class LinearMoveTowardsProcessor : Processor<LinearMoveTowardsSource>
     {
-        public void Process(LinearMoveTowardsSource source, GameObject avatarRoot)
+        public override void Process(Context context)
         {
             var controller = new AnimatorController();
             
@@ -18,8 +22,8 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
             controller.AddParameter("Delta", AnimatorControllerParameterType.Float);
             controller.AddParameter("Step Size", AnimatorControllerParameterType.Float);
-            controller.AddParameter(source.outputParameter, AnimatorControllerParameterType.Float);
-            controller.AddParameter(source.deltaTimeParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(model.outputParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(model.deltaTimeParameter, AnimatorControllerParameterType.Float);
 
             var parameters = controller.parameters;
 
@@ -67,7 +71,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                     hideFlags = HideFlags.HideInHierarchy
                 };
 
-                foreach (var input in source.inputs)
+                foreach (var input in model.inputs)
                 {
                     var inputTree = new BlendTree()
                     {
@@ -107,7 +111,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                     {
                         name = "Subtract Output",
                         blendType = BlendTreeType.Simple1D,
-                        blendParameter = source.outputParameter,
+                        blendParameter = model.outputParameter,
                         useAutomaticThresholds = false,
                         hideFlags = HideFlags.HideInHierarchy
                     };
@@ -126,16 +130,16 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                     {
                         name = "Copy Output",
                         blendType = BlendTreeType.Simple1D,
-                        blendParameter = source.outputParameter,
+                        blendParameter = model.outputParameter,
                         useAutomaticThresholds = false,
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip(source.outputParameter, source.outputRange.x);
-                    var upperClip = GetClip(source.outputParameter, source.outputRange.y);
+                    var lowerClip = GetClip(model.outputParameter, model.outputRange.x);
+                    var upperClip = GetClip(model.outputParameter, model.outputRange.y);
 
-                    outputCopyTree.AddChild(lowerClip, source.outputRange.x);
-                    outputCopyTree.AddChild(upperClip, source.outputRange.y);
+                    outputCopyTree.AddChild(lowerClip, model.outputRange.x);
+                    outputCopyTree.AddChild(upperClip, model.outputRange.y);
 
                     root.AddChild(outputCopyTree);
                 }
@@ -149,9 +153,9 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip("Step Size", source.decreaseRate);
+                    var lowerClip = GetClip("Step Size", model.decreaseRate);
                     var middleClip = GetClip("Step Size", 0);
-                    var upperClip = GetClip("Step Size", source.increaseRate);
+                    var upperClip = GetClip("Step Size", model.increaseRate);
 
                     stepSizeTree.AddChild(lowerClip, -0.01f);
                     stepSizeTree.AddChild(middleClip, 0f);
@@ -177,9 +181,9 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip(source.outputParameter, -1);
-                    var middleClip = GetClip(source.outputParameter, 0);
-                    var upperClip = GetClip(source.outputParameter, 1);
+                    var lowerClip = GetClip(model.outputParameter, -1);
+                    var middleClip = GetClip(model.outputParameter, 0);
+                    var upperClip = GetClip(model.outputParameter, 1);
 
                     linearBlendTree.AddChild(lowerClip, -0.1f);
                     linearBlendTree.AddChild(middleClip, 0);
@@ -188,7 +192,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                     deltaTimeTree.AddChild(linearBlendTree);
 
                     children = deltaTimeTree.children;
-                    children[0].directBlendParameter = source.deltaTimeParameter;
+                    children[0].directBlendParameter = model.deltaTimeParameter;
                     deltaTimeTree.children = children;
 
                     root.AddChild(deltaTimeTree);
@@ -205,16 +209,9 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                 root.children = children;
             }
 
-            var fc = FuryComponents.CreateFullController(source.gameObject);
+            context.receiver.AddController(controller);
 
-            fc.AddController(controller);
-
-            foreach (var input in source.inputs)
-                fc.AddGlobalParam(input.parameter);
-
-            fc.AddGlobalParam(source.outputParameter);
-            
-            fc.AddGlobalParam(source.deltaTimeParameter);
+            context.receiver.AddGlobalParameter(model.deltaTimeParameter);
         }
     }
 }

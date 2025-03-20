@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   parameters:
-  - name: Linear Move Towards/Input
+  - name: Input
     valueType: 1
     saved: 1
     defaultValue: 0

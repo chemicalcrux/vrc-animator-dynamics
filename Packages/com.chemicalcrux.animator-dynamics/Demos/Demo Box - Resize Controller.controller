@@ -35,38 +35,44 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 5f881b7db64264be585724cbda713f7e, type: 2}
+    m_Motion: {fileID: 7400000, guid: 8e36c89b31c804253a6aba4694fd05c8, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Linear Move Towards/Output
+    m_DirectBlendParameter: Constant/One
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 55ae434efef8b4ce68824355481872a7, type: 2}
+    m_Motion: {fileID: 7400000, guid: c4e320c8125b94ccabae96ebc5500167, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Linear Move Towards/Output
+    m_DirectBlendParameter: Output
     m_Mirror: 0
-  m_BlendParameter: Second Order Dynamics/Output
+  m_BlendParameter: Output
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
-  m_BlendType: 0
+  m_BlendType: 4
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Second Order Dynamics - Controller
+  m_Name: Demo Box - Resize Controller
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Second Order Dynamics/Output
+  - m_Name: Constant/One
+    m_Type: 1
+    m_DefaultFloat: 1
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Output
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0

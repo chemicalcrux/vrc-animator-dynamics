@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using ChemicalCrux.ProceduralController.Runtime.Models;
 using UnityEngine;
-using VRC.SDKBase;
 
 namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
 {
-    public class LinearMoveTowardsSource : MonoBehaviour, IEditorOnly
+    [CreateAssetMenu]
+    public class LinearMoveTowardsSource : AssetModel
     {
         [Serializable]
         public struct InputItem

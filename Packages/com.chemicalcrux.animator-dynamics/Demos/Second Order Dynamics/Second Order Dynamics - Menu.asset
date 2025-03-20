@@ -23,5 +23,5 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: Second Order Dynamics/Input
+    - name: Input
     labels: []
