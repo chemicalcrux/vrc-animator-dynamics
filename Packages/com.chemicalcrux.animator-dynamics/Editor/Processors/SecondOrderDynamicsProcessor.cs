@@ -1,4 +1,4 @@
-using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
+using ChemicalCrux.AnimatorDynamics.Runtime.Models;
 using ChemicalCrux.ProceduralController.Editor;
 using ChemicalCrux.ProceduralController.Editor.Processors;
 using com.vrcfury.api;
@@ -9,7 +9,7 @@ using UnityEngine;
 namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
     [UsedImplicitly]
-    public class SecondOrderDynamicsProcessor : Processor<SecondOrderDynamicsSource>
+    public class SecondOrderDynamicsProcessor : Processor<SecondOrderDynamicsModel>
     {
         private AnimatorController controller;
         private float k1, k2, k3, tCrit;

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using ChemicalCrux.ProceduralController.Runtime.Models;
 using UnityEngine;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
+namespace ChemicalCrux.AnimatorDynamics.Runtime.Models
 {
     [CreateAssetMenu]
-    public class ApproachSource : AssetModel
+    public class ApproachModel : AssetModel
     {
         [Serializable]
         public struct InputItem

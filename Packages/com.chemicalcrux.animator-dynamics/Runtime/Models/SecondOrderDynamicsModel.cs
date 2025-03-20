@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using ChemicalCrux.ProceduralController.Runtime.Models;
 using Pursuit.Code;
 using UnityEngine;
-using VRC.SDKBase;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
+namespace ChemicalCrux.AnimatorDynamics.Runtime.Models
 {
     [Serializable]
     public struct InputItem
@@ -16,7 +15,7 @@ namespace ChemicalCrux.AnimatorDynamics.Runtime.Sources
     }
     
     [CreateAssetMenu]
-    public class SecondOrderDynamicsSource : AssetModel
+    public class SecondOrderDynamicsModel : AssetModel
     {
         public List<InputItem> inputs;
         public float x0;

@@ -1,4 +1,4 @@
-using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
+using ChemicalCrux.AnimatorDynamics.Runtime.Models;
 using ChemicalCrux.ProceduralController.Editor;
 using ChemicalCrux.ProceduralController.Editor.Processors;
 using com.vrcfury.api;
@@ -11,7 +11,7 @@ using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
 namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
     [UsedImplicitly]
-    public class LinearMoveTowardsProcessor : Processor<LinearMoveTowardsSource>
+    public class LinearMoveTowardsProcessor : Processor<LinearMoveTowardsModel>
     {
         public override void Process(Context context)
         {

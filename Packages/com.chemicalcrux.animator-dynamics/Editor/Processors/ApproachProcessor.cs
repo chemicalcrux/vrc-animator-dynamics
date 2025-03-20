@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using ChemicalCrux.AnimatorDynamics.Runtime.Sources;
+using ChemicalCrux.AnimatorDynamics.Runtime.Models;
 using ChemicalCrux.ProceduralController.Editor;
 using ChemicalCrux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
@@ -11,7 +11,7 @@ using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
 namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 {
     [UsedImplicitly]
-    public class ApproachProcessor : Processor<ApproachSource>
+    public class ApproachProcessor : Processor<ApproachModel>
     {
         private AnimatorController controller;
         
