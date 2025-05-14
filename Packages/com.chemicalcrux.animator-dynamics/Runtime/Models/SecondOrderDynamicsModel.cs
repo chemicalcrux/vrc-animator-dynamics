@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ChemicalCrux.ProceduralController.Runtime.Models;
-using Pursuit.Code;
 using UnityEngine;
 
 namespace ChemicalCrux.AnimatorDynamics.Runtime.Models
