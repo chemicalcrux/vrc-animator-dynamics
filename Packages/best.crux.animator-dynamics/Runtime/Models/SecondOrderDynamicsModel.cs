@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Crux.ProceduralController.Runtime.Models;
 using UnityEngine;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime.Models
+namespace Crux.AnimatorDynamics.Runtime.Models
 {
     [Serializable]
     public struct InputItem

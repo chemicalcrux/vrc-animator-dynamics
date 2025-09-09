@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using ChemicalCrux.AnimatorDynamics.Runtime.Models;
+using Crux.AnimatorDynamics.Runtime.Models;
 using Crux.ProceduralController.Editor;
 using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;

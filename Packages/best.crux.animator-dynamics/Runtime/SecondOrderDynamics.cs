@@ -3,7 +3,7 @@
 using System;
 using UnityEngine;
 
-namespace ChemicalCrux.AnimatorDynamics.Runtime
+namespace Crux.AnimatorDynamics.Runtime
 {
     [Serializable]
     public abstract class SecondOrderDynamics<T>

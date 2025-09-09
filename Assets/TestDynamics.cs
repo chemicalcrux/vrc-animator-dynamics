@@ -1,4 +1,4 @@
-using ChemicalCrux.AnimatorDynamics.Runtime;
+using Crux.AnimatorDynamics.Runtime;
 using UnityEngine;
 
 namespace Pursuit.Code

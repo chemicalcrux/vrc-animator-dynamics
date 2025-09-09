@@ -1,6 +1,6 @@
 {
-    "name": "AnimatorDynamicsEditor",
-    "rootNamespace": "ChemicalCrux.AnimatorDynamics.Editor",
+    "name": "Crux.AnimatorDynamics.Editor",
+    "rootNamespace": "Crux.AnimatorDynamics.Editor",
     "references": [
         "GUID:f73a22696233641469fa8a261cbb8580",
         "GUID:cd59bf9231294ffab8427690942c6a35",
