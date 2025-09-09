@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.chemicalcrux.animator-dynamics": {
-      "version": "file:com.chemicalcrux.animator-dynamics",
+    "best.crux.animator-dynamics": {
+      "version": "file:best.crux.animator-dynamics",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

@@ -11,8 +11,9 @@
     "url": "https://github.com/chemicalcrux/"
   },
   "vpmDependencies" : {
-    "com.vrchat.avatars" : ">=3.7.6 < 3.9.0",
+    "com.vrchat.base" : ">=3.7.6 <3.9.0",
+    "com.vrchat.avatars" : ">=3.7.6 <3.9.0",
     "com.vrcfury.vrcfury" : ">=1.1206.0",
-    "com.chemicalcrux.procedural-controller" : "0.1.X"
+    "com.chemicalcrux.procedural-controller" : ">=0.1.0 <0.2.0"
   }
 }
