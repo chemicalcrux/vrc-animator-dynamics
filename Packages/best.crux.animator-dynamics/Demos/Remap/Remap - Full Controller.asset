@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08c0c7e808c418eb01633abe1910d02, type: 3}
   m_Name: Remap - Full Controller
   m_EditorClassIdentifier: 
-  controllers:
-  - {fileID: 9100000, guid: ab45aa1ce3c79435d91c38f2e9c2d967, type: 2}
-  menus:
-  - menu: {fileID: 11400000, guid: aa93b44c173054eccbce2c8ebeaef2cd, type: 2}
-    path: 
-  parameters:
-  - {fileID: 11400000, guid: 7e200ca18584c4e5a98d01306372bcd2, type: 2}
-  globalParameters: []
+  data:
+    rid: 4469067488927416344
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469067488927416344
+      type: {class: FullControllerModelDataV1, ns: Crux.ProceduralController.Runtime.Models,
+        asm: Crux.ProceduralController.Runtime}
+      data:
+        controllers:
+          list:
+          - {fileID: 9100000, guid: ab45aa1ce3c79435d91c38f2e9c2d967, type: 2}
+        menus:
+          list:
+          - menu: {fileID: 11400000, guid: aa93b44c173054eccbce2c8ebeaef2cd, type: 2}
+            path: 
+        parameters:
+          list:
+          - {fileID: 11400000, guid: 7e200ca18584c4e5a98d01306372bcd2, type: 2}
+        globalParameters:
+          list: []

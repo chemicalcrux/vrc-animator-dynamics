@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08c0c7e808c418eb01633abe1910d02, type: 3}
   m_Name: Linear Move Towards - Full Controller
   m_EditorClassIdentifier: 
-  controllers:
-  - {fileID: 9100000, guid: ab45aa1ce3c79435d91c38f2e9c2d967, type: 2}
-  menus:
-  - menu: {fileID: 11400000, guid: 05bf32d097a7a49b9a4fdc4ba48a603b, type: 2}
-    path: 
-  parameters:
-  - {fileID: 11400000, guid: 8fa14f1a5b2a34b3e9c6559811131a91, type: 2}
-  globalParameters: []
+  data:
+    rid: 4469067488927416343
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469067488927416343
+      type: {class: FullControllerModelDataV1, ns: Crux.ProceduralController.Runtime.Models,
+        asm: Crux.ProceduralController.Runtime}
+      data:
+        controllers:
+          list:
+          - {fileID: 9100000, guid: ab45aa1ce3c79435d91c38f2e9c2d967, type: 2}
+        menus:
+          list:
+          - menu: {fileID: 11400000, guid: 05bf32d097a7a49b9a4fdc4ba48a603b, type: 2}
+            path: 
+        parameters:
+          list:
+          - {fileID: 11400000, guid: 8fa14f1a5b2a34b3e9c6559811131a91, type: 2}
+        globalParameters:
+          list: []

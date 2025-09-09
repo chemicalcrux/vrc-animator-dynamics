@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChemicalCrux.AnimatorDynamics.Runtime.Models;
-using ChemicalCrux.ProceduralController.Editor;
-using ChemicalCrux.ProceduralController.Editor.Processors;
+using Crux.ProceduralController.Editor;
+using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;

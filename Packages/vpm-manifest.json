@@ -9,8 +9,8 @@
     "vrchat.blackstartx.gesture-manager": {
       "version": "3.9.3"
     },
-    "com.chemicalcrux.procedural-controller": {
-      "version": "0.1.0"
+    "best.crux.procedural-controller": {
+      "version": "0.2.0"
     }
   },
   "locked": {
@@ -31,15 +31,20 @@
     "vrchat.blackstartx.gesture-manager": {
       "version": "3.9.3",
       "dependencies": {
-        "com.vrchat.avatars": ">=3.5.2 < 3.8.X"
+        "com.vrchat.avatars": ">=3.5.2 <3.8.X"
       }
     },
-    "com.chemicalcrux.procedural-controller": {
-      "version": "0.1.0",
+    "best.crux.procedural-controller": {
+      "version": "0.2.0",
       "dependencies": {
-        "com.vrchat.avatars": ">=3.7.6 < 3.8.X",
-        "com.vrcfury.vrcfury": ">=1.1206.0"
+        "best.crux.core": "^0.7.0",
+        "com.vrcfury.vrcfury": ">=1.1206.0",
+        "com.vrchat.avatars": ">=3.7.6 <3.9.0"
       }
+    },
+    "best.crux.core": {
+      "version": "0.7.0",
+      "dependencies": {}
     }
   }
 }

@@ -1,6 +1,6 @@
 using ChemicalCrux.AnimatorDynamics.Runtime.Models;
-using ChemicalCrux.ProceduralController.Editor;
-using ChemicalCrux.ProceduralController.Editor.Processors;
+using Crux.ProceduralController.Editor;
+using Crux.ProceduralController.Editor.Processors;
 using com.vrcfury.api;
 using JetBrains.Annotations;
 using UnityEditor.Animations;

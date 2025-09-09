@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ChemicalCrux.ProceduralController.Runtime.Models;
+using Crux.ProceduralController.Runtime.Models;
 using UnityEngine;
 
 namespace ChemicalCrux.AnimatorDynamics.Runtime.Models

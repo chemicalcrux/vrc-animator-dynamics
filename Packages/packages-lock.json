@@ -6,8 +6,14 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.chemicalcrux.procedural-controller": {
-      "version": "file:com.chemicalcrux.procedural-controller",
+    "best.crux.core": {
+      "version": "file:best.crux.core",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "best.crux.procedural-controller": {
+      "version": "file:best.crux.procedural-controller",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
