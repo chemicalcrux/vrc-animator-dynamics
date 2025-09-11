@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Crux.Core.Runtime.Upgrades;
 using Crux.ProceduralController.Runtime.Models;
 using UnityEngine;
 
-namespace Crux.AnimatorDynamics.Runtime.Models
+namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
 {
     [Serializable]
     public struct InputItem
@@ -15,6 +16,25 @@ namespace Crux.AnimatorDynamics.Runtime.Models
     
     [CreateAssetMenu]
     public class SecondOrderDynamicsModel : AssetModel
+    {
+        [SerializeReference] public SecondOrderDynamicsData data = new SecondOrderDynamicsDataV1();
+
+        void Reset()
+        {
+            data = new SecondOrderDynamicsDataV1();
+        }
+    }
+
+    [Serializable]
+    [UpgradableLatestVersion(1)]
+    public abstract class SecondOrderDynamicsData : Upgradable<SecondOrderDynamicsData>
+    {
+        
+    }
+
+    [Serializable]
+    [UpgradableVersion(1)]
+    public class SecondOrderDynamicsDataV1 : SecondOrderDynamicsData
     {
         public List<InputItem> inputs;
         public float x0;
@@ -32,32 +52,9 @@ namespace Crux.AnimatorDynamics.Runtime.Models
         public AnimationCurve previewCurve = new();
         public int minimumFramerate;
         
-        private void OnValidate()
+        public override SecondOrderDynamicsData Upgrade()
         {
-            SecondOrderDynamicsFloat simulator = new()
-            {
-                x0 = 0,
-                f = f,
-                z = z,
-                r = r
-            };
-
-            previewCurve.ClearKeys();
-
-            float t = 0;
-
-            simulator.Setup();
-
-            minimumFramerate = Mathf.RoundToInt(1 / simulator.tCrit);
-
-            previewCurve.AddKey(0, simulator.y);
-
-            while (t < 1)
-            {
-                simulator.Update(0.01f, 1);
-                t += 0.01f;
-                previewCurve.AddKey(t, simulator.y);
-            }
+            return this;
         }
     }
 }

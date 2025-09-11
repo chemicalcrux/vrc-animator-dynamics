@@ -1,4 +1,5 @@
 using Crux.AnimatorDynamics.Runtime.Models;
+using Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics;
 using Crux.ProceduralController.Editor;
 using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
@@ -10,11 +11,16 @@ namespace Crux.AnimatorDynamics.Editor.Processors
     [UsedImplicitly]
     public class SecondOrderDynamicsProcessor : Processor<SecondOrderDynamicsModel>
     {
+        private SecondOrderDynamicsDataV1 data;
+        
         private AnimatorController controller;
         private float k1, k2, k3, tCrit;
 
         public override void Process(Context context)
         {
+            if (!model.data.TryUpgradeTo(out data))
+                return;
+            
             controller = new();
 
             CalculateConstants();
@@ -23,17 +29,17 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
             context.receiver.AddController(controller);
             
-            context.receiver.AddGlobalParameter(model.deltaTimeParameter);
-            context.receiver.AddGlobalParameter(model.deltaTimeInverseParameter);
+            context.receiver.AddGlobalParameter(data.deltaTimeParameter);
+            context.receiver.AddGlobalParameter(data.deltaTimeInverseParameter);
         }
 
         private void AddParameters()
         {
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.outputParameter, AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.deltaTimeParameter, AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.deltaTimeParameter + "sqr", AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.deltaTimeInverseParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.outputParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.deltaTimeParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.deltaTimeParameter + "sqr", AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.deltaTimeInverseParameter, AnimatorControllerParameterType.Float);
 
             controller.AddParameter("k1", AnimatorControllerParameterType.Float);
             controller.AddParameter("k2_inv", AnimatorControllerParameterType.Float);
@@ -55,15 +61,15 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
             foreach (AnimatorControllerParameter parameter in parameters)
             {
-                if (parameter.name == model.deltaTimeParameter)
+                if (parameter.name == data.deltaTimeParameter)
                 {
                     parameter.defaultFloat = 0.2f;
                 }
 
-                if (parameter.name == model.deltaTimeParameter + "sqr")
+                if (parameter.name == data.deltaTimeParameter + "sqr")
                     parameter.defaultFloat = 0.2f * 0.2f;
 
-                if (parameter.name == model.deltaTimeInverseParameter)
+                if (parameter.name == data.deltaTimeInverseParameter)
                     parameter.defaultFloat = 5f;
 
                 parameter.defaultFloat = parameter.name switch
@@ -73,12 +79,12 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                     "k2_inv" => 1 / k2,
                     "k3" => k3,
                     "tCrit" => tCrit,
-                    "x" => model.x0,
+                    "x" => data.x0,
                     _ => parameter.defaultFloat
                 };
 
-                if (parameter.name == model.outputParameter)
-                    parameter.defaultFloat = model.x0;
+                if (parameter.name == data.outputParameter)
+                    parameter.defaultFloat = data.x0;
             }
 
             controller.parameters = parameters;
@@ -86,9 +92,9 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
         private void CalculateConstants()
         {
-            k1 = model.z / (Mathf.PI * model.f);
-            k2 = 1 / (2 * Mathf.PI * model.f * (2 * Mathf.PI * model.f));
-            k3 = model.r * model.z / (2 * Mathf.PI * model.f);
+            k1 = data.z / (Mathf.PI * data.f);
+            k2 = 1 / (2 * Mathf.PI * data.f * (2 * Mathf.PI * data.f));
+            k3 = data.r * data.z / (2 * Mathf.PI * data.f);
 
             tCrit = 0.8f * (Mathf.Sqrt(4 * k2 + k1 * k1) - k1);
         }
@@ -132,23 +138,23 @@ namespace Crux.AnimatorDynamics.Editor.Processors
             var velocityTree = CreateVelocityTree();
             rootTree.AddChild(velocityTree);
 
-            var positiveResult = AnimatorMath.Remap(model.deltaTimeParameter, "yd", new Vector2(0, tCrit),
+            var positiveResult = AnimatorMath.Remap(data.deltaTimeParameter, "yd", new Vector2(0, tCrit),
                 new Vector2(0, 1000 * tCrit));
-            var negativeResult = AnimatorMath.Remap(model.deltaTimeParameter, "yd", new Vector2(0, tCrit),
+            var negativeResult = AnimatorMath.Remap(data.deltaTimeParameter, "yd", new Vector2(0, tCrit),
                 new Vector2(0, -1000 * tCrit));
 
             var positiveResultDoubleTime = AnimatorMath.Create1DProductTree(
                 AnimatorMath.Constant("yd", 1000 * tCrit * tCrit),
                 AnimatorMath.Constant("yd", -1000 * tCrit * tCrit),
-                (model.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
-                (model.deltaTimeParameter, new Vector2(-tCrit, tCrit))
+                (data.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
+                (data.deltaTimeParameter, new Vector2(-tCrit, tCrit))
             );
 
             var negativeResultDoubleTime = AnimatorMath.Create1DProductTree(
                 AnimatorMath.Constant("yd", -1000 * tCrit * tCrit),
                 AnimatorMath.Constant("yd", 1000 * tCrit * tCrit),
-                (model.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
-                (model.deltaTimeParameter, new Vector2(-tCrit, tCrit))
+                (data.deltaTimeParameter, new Vector2(-tCrit, tCrit)),
+                (data.deltaTimeParameter, new Vector2(-tCrit, tCrit))
             );
 
             var range1000 = new Vector2(-1000, 1000);
@@ -160,7 +166,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
             part2 = AnimatorMath.CreateProductTree(part2, "k3", "k2_inv");
 
             var part3 = AnimatorMath.Create1DProductTree(negativeResult, positiveResult,
-                (model.outputParameter, range1000));
+                (data.outputParameter, range1000));
             part3 = AnimatorMath.CreateProductTree(part3, "k2_inv");
 
             var part4 = AnimatorMath.Create1DProductTree(negativeResultDoubleTime, positiveResultDoubleTime,
@@ -198,7 +204,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            foreach (var input in model.inputs)
+            foreach (var input in data.inputs)
             {
                 var inputTree = new BlendTree
                 {
@@ -241,7 +247,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            var keep = AnimatorMath.Copy(model.outputParameter, model.outputParameter);
+            var keep = AnimatorMath.Copy(data.outputParameter, data.outputParameter);
 
             var change = new BlendTree
             {
@@ -250,9 +256,9 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            var positive = AnimatorMath.Remap(model.deltaTimeParameter, model.outputParameter, new Vector2(0, tCrit),
+            var positive = AnimatorMath.Remap(data.deltaTimeParameter, data.outputParameter, new Vector2(0, tCrit),
                 new Vector2(0, 100 * tCrit));
-            var negative = AnimatorMath.Remap(model.deltaTimeParameter, model.outputParameter, new Vector2(0, tCrit),
+            var negative = AnimatorMath.Remap(data.deltaTimeParameter, data.outputParameter, new Vector2(0, tCrit),
                 new Vector2(0, -100 * tCrit));
 
             var move = AnimatorMath.Create1DProductTree(positive, negative, ("yd", new Vector2(-100, 100)));
@@ -281,7 +287,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
             root.AddChild(subtract);
 
             var children = root.children;
-            children[0].directBlendParameter = model.deltaTimeInverseParameter;
+            children[0].directBlendParameter = data.deltaTimeInverseParameter;
             root.children = children;
 
             return root;
