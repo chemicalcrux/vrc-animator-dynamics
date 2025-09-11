@@ -52,7 +52,10 @@ namespace Crux.AnimatorDynamics.Editor.ExtensionMethods
 
                 var property = (SerializedProperty)fieldInfo.GetValue(propertyField);
 
-                element.TrackSerializedObjectValue(property.serializedObject, _ => callback());
+                if (property != null)
+                    element.TrackSerializedObjectValue(property.serializedObject, _ => callback());
+                else
+                    Debug.LogWarning("Couldn't find the property.");
             });
         }
     }

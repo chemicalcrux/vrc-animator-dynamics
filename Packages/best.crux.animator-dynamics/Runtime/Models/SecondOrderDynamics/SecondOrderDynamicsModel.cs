@@ -48,10 +48,6 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
         public string deltaTimeParameter = "Shared/Time/Delta";
         public string deltaTimeInverseParameter = "Shared/Time/Delta Inverse";
 
-        [Header ("Preview")]
-        public AnimationCurve previewCurve = new();
-        public int minimumFramerate;
-        
         public override SecondOrderDynamicsData Upgrade()
         {
             return this;
