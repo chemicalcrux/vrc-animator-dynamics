@@ -12,15 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3da363df3e04e858c4a355b22c83e6, type: 3}
   m_Name: Approach - Source
   m_EditorClassIdentifier: 
-  outputParameter: Output
-  outputRange: {x: 0, y: 1}
-  inputs:
-  - parameter: Input 1
-    inputRange: {x: 0, y: 1}
-    approachRange: {x: 0, y: 1}
-  - parameter: Input 2
-    inputRange: {x: 0, y: 1}
-    approachRange: {x: 0, y: 0.5}
-  - parameter: Input 3
-    inputRange: {x: 0.5, y: 1}
-    approachRange: {x: 0, y: 0.5}
+  data:
+    rid: 4469067488927416354
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469067488927416354
+      type: {class: ApproachDataV1, ns: Crux.AnimatorDynamics.Runtime.Models.Approach,
+        asm: Crux.AnimatorDynamics.Runtime}
+      data:
+        outputParameter: Output
+        outputRange: {x: 0, y: 1}
+        inputs:
+        - parameter: Input 1
+          inputRange: {x: 0, y: 1}
+          approachRange: {x: 0, y: 1}
+        - parameter: Input 2
+          inputRange: {x: 0, y: 1}
+          approachRange: {x: 0, y: 0.5}
+        - parameter: Input 3
+          inputRange: {x: 0.5, y: 1}
+          approachRange: {x: 0, y: 0.5}

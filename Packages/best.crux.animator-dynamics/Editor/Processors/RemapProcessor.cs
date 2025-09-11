@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Crux.AnimatorDynamics.Runtime.Models;
 using Crux.ProceduralController.Editor;
@@ -6,10 +5,9 @@ using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
+using static Crux.AnimatorDynamics.Editor.AnimatorMath;
 
-using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
-
-namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
+namespace Crux.AnimatorDynamics.Editor.Processors
 {
     [UsedImplicitly]
     public class RemapProcessor : Processor<RemapModel>

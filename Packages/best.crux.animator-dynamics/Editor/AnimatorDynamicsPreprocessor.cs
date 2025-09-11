@@ -1,8 +1,7 @@
-using ChemicalCrux.AnimatorDynamics.Editor.Processors;
 using UnityEngine;
 using VRC.SDKBase.Editor.BuildPipeline;
 
-namespace ChemicalCrux.AnimatorDynamics.Editor
+namespace Crux.AnimatorDynamics.Editor
 {
     public class AnimatorDynamicsPreprocessor : IVRCSDKPreprocessAvatarCallback
     {

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace ChemicalCrux.AnimatorDynamics.Editor
+namespace Crux.AnimatorDynamics.Editor
 {
     [PublicAPI]
     public static class AnimatorMath

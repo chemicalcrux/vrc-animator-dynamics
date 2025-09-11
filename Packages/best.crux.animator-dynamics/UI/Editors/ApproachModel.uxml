@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="Approach Preview" src="project://database/Packages/best.crux.animator-dynamics/UI/Previews/Approach%20Preview.uxml?fileID=9197481963319205126&amp;guid=7f68480990b03449993529f5821f267a&amp;type=3#Approach Preview" />
+    <uie:PropertyField binding-path="data" />
+    <ui:Instance template="Approach Preview" name="Approach Preview" />
+</ui:UXML>

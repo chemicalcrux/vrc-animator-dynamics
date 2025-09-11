@@ -1,18 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
-using Crux.AnimatorDynamics.Runtime.Models;
+using Crux.AnimatorDynamics.Runtime.Models.Approach;
 using Crux.ProceduralController.Editor;
 using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
-using static ChemicalCrux.AnimatorDynamics.Editor.AnimatorMath;
+using static Crux.AnimatorDynamics.Editor.AnimatorMath;
 
-namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
+namespace Crux.AnimatorDynamics.Editor.Processors
 {
     [UsedImplicitly]
     public class ApproachProcessor : Processor<ApproachModel>
     {
+        private ApproachDataV1 data;
+        
         private AnimatorController controller;
         
         private int inputIndex;
@@ -20,6 +22,9 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 
         public override void Process(Context context)
         {
+            if (!model.data.TryUpgradeTo(out data))
+                return;
+                
             inputMap.Clear();
             inputIndex = 0;
 
@@ -34,7 +39,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 
         void AddParameters()
         {
-            foreach (var input in model.inputs)
+            foreach (var input in data.inputs)
             {
                 inputMap[input.parameter] = $"Internal/Remap {inputIndex}";
                 ++inputIndex;
@@ -42,7 +47,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                 controller.AddParameter(inputMap[input.parameter], AnimatorControllerParameterType.Float);
             }
 
-            controller.AddParameter(model.outputParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.outputParameter, AnimatorControllerParameterType.Float);
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
 
             var parameters = controller.parameters;
@@ -77,7 +82,7 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
 
             List<Motion> motions = new();
 
-            foreach (var input in model.inputs)
+            foreach (var input in data.inputs)
             {
                 Vector2 outputRange;
 
@@ -117,11 +122,11 @@ namespace ChemicalCrux.AnimatorDynamics.Editor.Processors
                 hideFlags = HideFlags.HideInHierarchy
             };
 
-            root.AddChild(GetClip(model.outputParameter, model.outputRange.y));
+            root.AddChild(GetClip(data.outputParameter, data.outputRange.y));
 
             var product = CreateProductTree(
-                GetClip(model.outputParameter, model.outputRange.x - model.outputRange.y),
-                model.inputs.Select(input => inputMap[input.parameter]).ToArray());
+                GetClip(data.outputParameter, data.outputRange.x - data.outputRange.y),
+                data.inputs.Select(input => inputMap[input.parameter]).ToArray());
 
             root.AddChild(product);
 
