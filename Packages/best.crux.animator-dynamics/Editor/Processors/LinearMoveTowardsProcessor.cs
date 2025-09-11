@@ -1,4 +1,4 @@
-using Crux.AnimatorDynamics.Runtime.Models;
+using Crux.AnimatorDynamics.Runtime.Models.LinearMoveTowards;
 using Crux.ProceduralController.Editor;
 using Crux.ProceduralController.Editor.Processors;
 using JetBrains.Annotations;
@@ -11,17 +11,20 @@ namespace Crux.AnimatorDynamics.Editor.Processors
     [UsedImplicitly]
     public class LinearMoveTowardsProcessor : Processor<LinearMoveTowardsModel>
     {
+        private LinearMoveTowardsDataV1 data;
+        
         public override void Process(Context context)
         {
-            var controller = new AnimatorController();
+            if (!model.data.TryUpgradeTo(out data))
+                return;
             
-            ChildMotion[] children = default;
+            var controller = new AnimatorController();
 
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
             controller.AddParameter("Delta", AnimatorControllerParameterType.Float);
             controller.AddParameter("Step Size", AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.outputParameter, AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.deltaTimeParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.outputParameter, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.deltaTimeParameter, AnimatorControllerParameterType.Float);
 
             var parameters = controller.parameters;
 
@@ -69,7 +72,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                     hideFlags = HideFlags.HideInHierarchy
                 };
 
-                foreach (var input in model.inputs)
+                foreach (var input in data.inputs)
                 {
                     var inputTree = new BlendTree()
                     {
@@ -93,6 +96,8 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
                 root.AddChild(deltaInputTree);
 
+                ChildMotion[] children;
+
                 {
                     children = deltaInputTree.children;
 
@@ -109,7 +114,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                     {
                         name = "Subtract Output",
                         blendType = BlendTreeType.Simple1D,
-                        blendParameter = model.outputParameter,
+                        blendParameter = data.outputParameter,
                         useAutomaticThresholds = false,
                         hideFlags = HideFlags.HideInHierarchy
                     };
@@ -128,16 +133,16 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                     {
                         name = "Copy Output",
                         blendType = BlendTreeType.Simple1D,
-                        blendParameter = model.outputParameter,
+                        blendParameter = data.outputParameter,
                         useAutomaticThresholds = false,
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip(model.outputParameter, model.outputRange.x);
-                    var upperClip = GetClip(model.outputParameter, model.outputRange.y);
+                    var lowerClip = GetClip(data.outputParameter, data.outputRange.x);
+                    var upperClip = GetClip(data.outputParameter, data.outputRange.y);
 
-                    outputCopyTree.AddChild(lowerClip, model.outputRange.x);
-                    outputCopyTree.AddChild(upperClip, model.outputRange.y);
+                    outputCopyTree.AddChild(lowerClip, data.outputRange.x);
+                    outputCopyTree.AddChild(upperClip, data.outputRange.y);
 
                     root.AddChild(outputCopyTree);
                 }
@@ -151,9 +156,9 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip("Step Size", model.decreaseRate);
+                    var lowerClip = GetClip("Step Size", data.decreaseRate);
                     var middleClip = GetClip("Step Size", 0);
-                    var upperClip = GetClip("Step Size", model.increaseRate);
+                    var upperClip = GetClip("Step Size", data.increaseRate);
 
                     stepSizeTree.AddChild(lowerClip, -0.01f);
                     stepSizeTree.AddChild(middleClip, 0f);
@@ -179,9 +184,9 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                         hideFlags = HideFlags.HideInHierarchy
                     };
 
-                    var lowerClip = GetClip(model.outputParameter, -1);
-                    var middleClip = GetClip(model.outputParameter, 0);
-                    var upperClip = GetClip(model.outputParameter, 1);
+                    var lowerClip = GetClip(data.outputParameter, -1);
+                    var middleClip = GetClip(data.outputParameter, 0);
+                    var upperClip = GetClip(data.outputParameter, 1);
 
                     linearBlendTree.AddChild(lowerClip, -0.1f);
                     linearBlendTree.AddChild(middleClip, 0);
@@ -190,7 +195,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
                     deltaTimeTree.AddChild(linearBlendTree);
 
                     children = deltaTimeTree.children;
-                    children[0].directBlendParameter = model.deltaTimeParameter;
+                    children[0].directBlendParameter = data.deltaTimeParameter;
                     deltaTimeTree.children = children;
 
                     root.AddChild(deltaTimeTree);
@@ -209,7 +214,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
             context.receiver.AddController(controller);
 
-            context.receiver.AddGlobalParameter(model.deltaTimeParameter);
+            context.receiver.AddGlobalParameter(data.deltaTimeParameter);
         }
     }
 }

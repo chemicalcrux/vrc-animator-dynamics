@@ -28,6 +28,6 @@ MonoBehaviour:
           inputRange: {x: 0.5, y: 1}
           outputRange: {x: 0, y: 2}
         - parameter: Input 3
-          inputRange: {x: 0.5, y: 1}
-          outputRange: {x: 0, y: 2}
+          inputRange: {x: 1, y: 0}
+          outputRange: {x: 0, y: 1}
         output: Output

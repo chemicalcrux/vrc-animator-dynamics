@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3526eb291b31e4688881f50b0e6c1dc6, type: 3}
   m_Name: Linear Move Towards - Source
   m_EditorClassIdentifier: 
-  inputs:
-  - parameter: Input
-    inputRange: {x: 0, y: 1}
-    outputRange: {x: 0, y: 1}
-  outputParameter: Output
-  deltaTimeParameter: Shared/Time/Delta
-  outputRange: {x: 0, y: 1}
-  decreaseRate: 0.25
-  increaseRate: 0.25
+  data:
+    rid: 4469067488927416359
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469067488927416359
+      type: {class: LinearMoveTowardsDataV1, ns: Crux.AnimatorDynamics.Runtime.Models.LinearMoveTowards,
+        asm: Crux.AnimatorDynamics.Runtime}
+      data:
+        inputs:
+        - parameter: Input
+          inputRange: {x: 0, y: 1}
+          outputRange: {x: 0, y: 1}
+        outputParameter: Output
+        deltaTimeParameter: Shared/Time/Delta
+        outputRange: {x: 0, y: 1}
+        decreaseRate: 0.1
+        increaseRate: 0.25
