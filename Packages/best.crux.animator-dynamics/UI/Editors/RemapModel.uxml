@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="Remap Preview" src="project://database/Packages/best.crux.animator-dynamics/UI/Previews/Remap%20Preview.uxml?fileID=9197481963319205126&amp;guid=7c4c4b403a1424eb586fce4474661f42&amp;type=3#Remap Preview" />
+    <uie:PropertyField binding-path="data" />
+    <ui:Instance template="Remap Preview" name="Remap Preview" />
+</ui:UXML>

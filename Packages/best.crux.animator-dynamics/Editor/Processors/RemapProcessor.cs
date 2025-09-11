@@ -12,14 +12,19 @@ namespace Crux.AnimatorDynamics.Editor.Processors
     [UsedImplicitly]
     public class RemapProcessor : Processor<RemapModel>
     {
+        private RemapDataV1 data;
+        
         public override void Process(Context context)
         {
+            if (!model.data.TryUpgradeTo(out data))
+                return;
+            
             var controller = new AnimatorController();
             
             ChildMotion[] children = default;
 
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
-            controller.AddParameter(model.output, AnimatorControllerParameterType.Float);
+            controller.AddParameter(data.output, AnimatorControllerParameterType.Float);
 
             var parameters = controller.parameters;
 
@@ -59,7 +64,7 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
                 state.motion = root;
 
-                foreach (var input in model.inputs)
+                foreach (var input in data.inputs)
                 {
                     var inputTree = new BlendTree()
                     {
@@ -74,8 +79,8 @@ namespace Crux.AnimatorDynamics.Editor.Processors
 
                     // Motions must be added in threshold order. How annoying.
                     var motions = Enumerable.Empty<(Motion Motion, float threshold)>()
-                        .Append((GetClip(model.output, input.outputRange.x), input.inputRange.x))
-                        .Append((GetClip(model.output, input.outputRange.y), input.inputRange.y))
+                        .Append((GetClip(data.output, input.outputRange.x), input.inputRange.x))
+                        .Append((GetClip(data.output, input.outputRange.y), input.inputRange.y))
                         .OrderBy(item => item.threshold);
 
                     foreach (var (motion, threshold) in motions)

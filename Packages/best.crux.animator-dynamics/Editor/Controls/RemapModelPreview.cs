@@ -1,23 +1,27 @@
 using System;
 using System.Linq;
-using Crux.AnimatorDynamics.Editor.ExtensionMethods;
-using Crux.AnimatorDynamics.Runtime.Models.Approach;
+using Crux.AnimatorDynamics.Runtime.Models;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Crux.AnimatorDynamics.Editor.ExtensionMethods.VisualElementExtensionMethods;
 
 namespace Crux.AnimatorDynamics.Editor.Controls
 {
-    public class ApproachModelPreview : VisualElement
+    public class RemapModelPreview : VisualElement
     {
+        private readonly VisualElement root;
         private readonly Label output;
-        private readonly SliderSet sliderSet;
 
-        private ApproachModel model;
-        private ApproachDataV1 data;
+        private SliderSet sliderSet;
 
-        public ApproachModelPreview()
+        private RemapModel model;
+        private RemapDataV1 data;
+        private SerializedProperty property;
+
+        public RemapModelPreview()
         {
-            var root = new VisualElement
+            root = new VisualElement
             {
                 name = "Root"
             };
@@ -33,7 +37,7 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             };
         }
 
-        public void Connect(ApproachModel model)
+        public void Connect(RemapModel model)
         {
             this.model = model;
             Rebuild();
@@ -42,12 +46,12 @@ namespace Crux.AnimatorDynamics.Editor.Controls
         void Recalculate()
         {
             float result = 0;
-
+            
             foreach (var (input, slider) in data.inputs.Zip(sliderSet.sliders, ValueTuple.Create))
             {
                 float inputFactor = Mathf.InverseLerp(input.inputRange.x, input.inputRange.y, slider.value);
-                float outputFactor = Mathf.Lerp(input.approachRange.x, input.approachRange.y, inputFactor);
-                result = Mathf.Lerp(result, 1, outputFactor);
+                float outputFactor = Mathf.Lerp(input.outputRange.x, input.outputRange.y, inputFactor);
+                result += outputFactor;
             }
 
             output.text = $"{result:N2}";
@@ -55,8 +59,6 @@ namespace Crux.AnimatorDynamics.Editor.Controls
 
         void Rebuild()
         {
-            Debug.Log("Rebuilding");
-
             if (!model.data.TryUpgradeTo(out data))
                 return;
 
@@ -65,11 +67,11 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             Recalculate();
         }
 
-        public new class UxmlFactory : UxmlFactory<ApproachModelPreview, UxmlTraits>
+        public new class UxmlFactory : UxmlFactory<RemapModelPreview, UxmlTraits>
         {
             public override VisualElement Create(IUxmlAttributes bag, CreationContext cc)
             {
-                var field = base.Create(bag, cc) as ApproachModelPreview;
+                var field = base.Create(bag, cc) as RemapModelPreview;
 
                 field.TrackPropertyByName(field!.Binding, field.Rebuild);
 
@@ -87,7 +89,7 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var ate = ve as ApproachModelPreview;
+                var ate = ve as RemapModelPreview;
 
                 ate!.Binding = binding.GetValueFromBag(bag, cc);
             }

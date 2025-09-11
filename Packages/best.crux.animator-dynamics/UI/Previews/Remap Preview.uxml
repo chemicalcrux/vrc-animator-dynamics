@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Preview" src="project://database/Packages/best.crux.animator-dynamics/UI/Previews/Preview.uxml?fileID=9197481963319205126&amp;guid=7d975065ef8784d5886c67c61a8e1648&amp;type=3#Preview" />
+    <ui:Instance template="Preview" name="Preview">
+        <Crux.AnimatorDynamics.Editor.Controls.RemapModelPreview binding="data" />
+    </ui:Instance>
+</ui:UXML>

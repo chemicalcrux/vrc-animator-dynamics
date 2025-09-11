@@ -12,14 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539ecdf636ff4184b70d1a2c63609472, type: 3}
   m_Name: Remap - Model
   m_EditorClassIdentifier: 
-  inputs:
-  - parameter: Input 1
-    inputRange: {x: 0, y: 1}
-    outputRange: {x: 0, y: 1}
-  - parameter: Input 2
-    inputRange: {x: 0.5, y: 1}
-    outputRange: {x: 0, y: 2}
-  - parameter: Input 3
-    inputRange: {x: 1, y: 0}
-    outputRange: {x: 0, y: 1}
-  output: Output
+  data:
+    rid: 4469067488927416356
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469067488927416356
+      type: {class: RemapDataV1, ns: Crux.AnimatorDynamics.Runtime.Models, asm: Crux.AnimatorDynamics.Runtime}
+      data:
+        inputs:
+        - parameter: Input 1
+          inputRange: {x: 0, y: 1}
+          outputRange: {x: 0, y: 1}
+        - parameter: Input 2
+          inputRange: {x: 0.5, y: 1}
+          outputRange: {x: 0, y: 2}
+        - parameter: Input 3
+          inputRange: {x: 0.5, y: 1}
+          outputRange: {x: 0, y: 2}
+        output: Output
