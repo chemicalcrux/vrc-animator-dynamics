@@ -33,9 +33,9 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             };
         }
 
-        public void Connect(ApproachModel model)
+        public void Connect(ApproachModel newModel)
         {
-            this.model = model;
+            model = newModel;
             Rebuild();
         }
 

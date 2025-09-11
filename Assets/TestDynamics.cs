@@ -1,21 +1,18 @@
 using Crux.AnimatorDynamics.Runtime;
 using UnityEngine;
 
-namespace Pursuit.Code
+public class TestDynamics : MonoBehaviour
 {
-    public class TestDynamics : MonoBehaviour
-    {
-        [SerializeField] private SecondOrderDynamicsFloat dynamics;
-        [SerializeField] private float target;
+    [SerializeField] private SecondOrderDynamicsFloat dynamics;
+    [SerializeField] private float target;
 
-        void Awake()
-        {
-            dynamics.Setup();
-        }
+    void Awake()
+    {
+        dynamics.Setup();
+    }
         
-        void Update()
-        {
-            dynamics.Update(0.2f, target);
-        }
+    void Update()
+    {
+        dynamics.Update(0.2f, target);
     }
 }

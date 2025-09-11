@@ -26,9 +26,9 @@ MonoBehaviour:
           inputRange: {x: 0, y: 1}
           outputRange: {x: 0, y: 1}
         x0: 0
-        f: 1.4
-        z: 0.16
-        r: 1
+        f: 4.34
+        z: 0.12
+        r: -0.21
         outputParameter: Output
         deltaTimeParameter: Shared/Time/Delta
         deltaTimeInverseParameter: Shared/Time/Delta Inverse

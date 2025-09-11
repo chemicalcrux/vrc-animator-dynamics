@@ -1,4 +1,3 @@
-using Crux.AnimatorDynamics.Runtime.Models;
 using Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics;
 using Crux.ProceduralController.Editor;
 using Crux.ProceduralController.Editor.Processors;

@@ -10,7 +10,6 @@ namespace Crux.AnimatorDynamics.Editor.Controls
 {
     public class RemapModelPreview : VisualElement
     {
-        private readonly VisualElement root;
         private readonly Label output;
 
         private SliderSet sliderSet;
@@ -21,7 +20,7 @@ namespace Crux.AnimatorDynamics.Editor.Controls
 
         public RemapModelPreview()
         {
-            root = new VisualElement
+            var root = new VisualElement
             {
                 name = "Root"
             };
@@ -37,9 +36,9 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             };
         }
 
-        public void Connect(RemapModel model)
+        public void Connect(RemapModel newModel)
         {
-            this.model = model;
+            model = newModel;
             Rebuild();
         }
 

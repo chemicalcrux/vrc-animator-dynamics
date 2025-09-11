@@ -20,9 +20,9 @@ namespace Crux.AnimatorDynamics.Editor.Controls
             style.minHeight = 300;
         }
 
-        public void Connect(SecondOrderDynamicsModel model)
+        public void Connect(SecondOrderDynamicsModel newModel)
         {
-            this.model = model;
+            model = newModel;
             Refresh();
         }
 

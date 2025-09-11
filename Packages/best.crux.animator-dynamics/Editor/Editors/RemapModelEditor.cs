@@ -1,9 +1,7 @@
 using Crux.AnimatorDynamics.Editor.Controls;
 using Crux.AnimatorDynamics.Runtime.Models;
-using Crux.AnimatorDynamics.Runtime.Models.Approach;
 using Crux.Core.Editor;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace Crux.AnimatorDynamics.Editor.Editors

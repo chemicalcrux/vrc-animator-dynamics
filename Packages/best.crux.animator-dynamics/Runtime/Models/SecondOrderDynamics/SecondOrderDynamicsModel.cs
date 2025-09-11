@@ -23,13 +23,22 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
         {
             data = new SecondOrderDynamicsDataV1();
         }
+
+        void OnValidate()
+        {
+            data.OnValidate();
+            
+        }
     }
 
     [Serializable]
     [UpgradableLatestVersion(1)]
     public abstract class SecondOrderDynamicsData : Upgradable<SecondOrderDynamicsData>
     {
-        
+        public virtual void OnValidate()
+        {
+            
+        }
     }
 
     [Serializable]
@@ -51,6 +60,14 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
         public override SecondOrderDynamicsData Upgrade()
         {
             return this;
+        }
+
+        public override void OnValidate()
+        {
+            base.OnValidate();
+
+            f = Mathf.Max(0, f);
+            z = Mathf.Max(0, z);
         }
     }
 }

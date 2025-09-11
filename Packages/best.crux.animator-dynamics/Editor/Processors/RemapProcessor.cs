@@ -21,8 +21,6 @@ namespace Crux.AnimatorDynamics.Editor.Processors
             
             var controller = new AnimatorController();
             
-            ChildMotion[] children = default;
-
             controller.AddParameter("One", AnimatorControllerParameterType.Float);
             controller.AddParameter(data.output, AnimatorControllerParameterType.Float);
 

@@ -1,5 +1,4 @@
 using Crux.AnimatorDynamics.Editor.Controls;
-using Crux.AnimatorDynamics.Runtime.Models.Approach;
 using Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics;
 using Crux.Core.Editor;
 using UnityEditor;
