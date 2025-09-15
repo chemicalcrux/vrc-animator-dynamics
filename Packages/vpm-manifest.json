@@ -19,31 +19,31 @@
       "dependencies": {}
     },
     "com.vrchat.avatars": {
-      "version": "3.7.6",
+      "version": "3.8.2",
       "dependencies": {
-        "com.vrchat.base": "3.7.6"
+        "com.vrchat.base": "3.8.2"
       }
     },
     "com.vrchat.base": {
-      "version": "3.7.6",
+      "version": "3.8.2",
       "dependencies": {}
     },
     "vrchat.blackstartx.gesture-manager": {
-      "version": "3.9.3",
+      "version": "3.9.4",
       "dependencies": {
-        "com.vrchat.avatars": ">=3.5.2 <3.8.X"
+        "com.vrchat.avatars": ">=3.5.2 <3.9.X"
       }
     },
     "best.crux.procedural-controller": {
-      "version": "0.2.0",
+      "version": "0.2.1",
       "dependencies": {
-        "best.crux.core": "^0.7.0",
+        "best.crux.core": "^0.8.0",
         "com.vrcfury.vrcfury": ">=1.1206.0",
         "com.vrchat.avatars": ">=3.7.6 <3.9.0"
       }
     },
     "best.crux.core": {
-      "version": "0.7.0",
+      "version": "0.8.0",
       "dependencies": {}
     }
   }
