@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Crux.AnimatorDynamics.Runtime.Models.LinearMoveTowards
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = Consts.AssetRootPath + "Linear Move Towards", order = Consts.AssetRootOrder)]
     public class LinearMoveTowardsModel : AssetModel
     {
         [SerializeReference] public LinearMoveTowardsData data = new LinearMoveTowardsDataV1();

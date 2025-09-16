@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Crux.AnimatorDynamics.Runtime.Models.Approach
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = Consts.AssetRootPath + "Approach", order = Consts.AssetRootOrder)]
     public class ApproachModel : AssetModel
     {
         [SerializeReference] public ApproachData data = new ApproachDataV1();

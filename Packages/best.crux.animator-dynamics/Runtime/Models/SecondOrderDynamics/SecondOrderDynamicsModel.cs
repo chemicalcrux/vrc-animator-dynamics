@@ -14,7 +14,7 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
         public Vector2 outputRange;
     }
     
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = Consts.AssetRootPath + "Second Order Dynamics", order = Consts.AssetRootOrder)]
     public class SecondOrderDynamicsModel : AssetModel
     {
         [SerializeReference] public SecondOrderDynamicsData data = new SecondOrderDynamicsDataV1();

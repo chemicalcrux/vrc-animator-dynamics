@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Crux.AnimatorDynamics.Runtime.Models
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = Consts.AssetRootPath + "Remap", order = Consts.AssetRootOrder)]
     public class RemapModel : AssetModel
     {
         [SerializeReference] public RemapData data = new RemapDataV1();
