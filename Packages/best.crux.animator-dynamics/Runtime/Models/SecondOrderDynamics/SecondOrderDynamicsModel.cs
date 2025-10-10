@@ -48,9 +48,9 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
         public List<InputItem> inputs;
         public float x0;
 
-        public float f;
-        public float z;
-        public float r;
+        public float f = 3f;
+        public float z = 0.1f;
+        public float r = 0f;
     
         public string outputParameter;
 
