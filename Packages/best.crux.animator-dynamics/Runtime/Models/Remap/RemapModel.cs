@@ -36,7 +36,7 @@ namespace Crux.AnimatorDynamics.Runtime.Models
             public Vector2 outputRange;
         }
     
-        public List<InputItem> inputs;
+        public List<InputItem> inputs = new();
         public string output;
         
         public override RemapData Upgrade()

@@ -45,7 +45,7 @@ namespace Crux.AnimatorDynamics.Runtime.Models.SecondOrderDynamics
     [UpgradableVersion(1)]
     public class SecondOrderDynamicsDataV1 : SecondOrderDynamicsData
     {
-        public List<InputItem> inputs;
+        public List<InputItem> inputs = new();
         public float x0;
 
         public float f = 3f;

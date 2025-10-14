@@ -39,7 +39,7 @@ namespace Crux.AnimatorDynamics.Runtime.Models.Approach
         public string outputParameter;
         public Vector2 outputRange = new(0, 1);
 
-        public List<InputItem> inputs;
+        public List<InputItem> inputs = new();
         
         public override ApproachData Upgrade()
         {

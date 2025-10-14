@@ -35,8 +35,8 @@ namespace Crux.AnimatorDynamics.Runtime.Models.LinearMoveTowards
             public Vector2 inputRange;
             public Vector2 outputRange;
         }
-    
-        public List<InputItem> inputs;
+
+        public List<InputItem> inputs = new();
         public string outputParameter;
         public string deltaTimeParameter = "Shared/Time/Delta";
 
