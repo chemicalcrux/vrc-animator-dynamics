@@ -10,7 +10,7 @@
       "version": "3.9.3"
     },
     "best.crux.procedural-controller": {
-      "version": "0.2.0"
+      "version": "0.2.2"
     }
   },
   "locked": {
@@ -35,11 +35,11 @@
       }
     },
     "best.crux.procedural-controller": {
-      "version": "0.2.1",
+      "version": "0.2.2",
       "dependencies": {
         "best.crux.core": "^0.8.0",
-        "com.vrcfury.vrcfury": ">=1.1206.0",
-        "com.vrchat.avatars": ">=3.7.6 <3.9.0"
+        "com.vrcfury.vrcfury": ">=1.1206.0 <2.0.0",
+        "com.vrchat.avatars": ">=3.7.6 <3.10.0"
       }
     },
     "best.crux.core": {
