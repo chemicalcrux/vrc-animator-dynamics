@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddda9f295d134ebf880017277790615, type: 3}
+  m_Name: Exponential Damping - Model
+  m_EditorClassIdentifier: 
+  data:
+    rid: 3602565600523321346
+  references:
+    version: 2
+    RefIds:
+    - rid: 3602565600523321346
+      type: {class: ExponentialDampingDataV1, ns: Crux.AnimatorDynamics.Runtime.Models.ExponentialDamping,
+        asm: Crux.AnimatorDynamics.Runtime}
+      data:
+        inputs:
+        - parameter: Input
+          inputRange: {x: 0, y: 1}
+          outputRange: {x: 0, y: 1}
+        outputParameter: Output
+        deltaTimeParameter: Shared/Time/Delta
+        outputRange: {x: 0, y: 1}
+        dampingFactor: 1
