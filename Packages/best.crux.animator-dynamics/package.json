@@ -14,7 +14,7 @@
     "com.vrchat.base" : ">=3.7.6 <3.10.0",
     "com.vrchat.avatars" : ">=3.7.6 <3.10.0",
     "com.vrcfury.vrcfury" : ">=1.1207.0 <2.0.0",
-    "best.crux.core": "^0.8.0",
+    "best.crux.core": ">=0.8.0 <0.10.0",
     "best.crux.procedural-controller" : "^0.2.0"
   }
 }
